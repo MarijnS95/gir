@@ -139,15 +139,13 @@ pub fn shared_lib_name_to_link_name(name: &str) -> &str {
     s
 }
 
-pub fn shared_libs_to_links(shared_libs: &[String]) -> String {
+pub fn shared_libs_to_links(shared_libs: &[String]) -> Option<String> {
     // https://github.com/rust-lang/cargo/issues/4533
     // links = ["foo", "bar"] or ['foo', 'bar'] is not supported.
     // Pick the first element
-    if let Some(shared_lib) = shared_libs.get(0) {
-        return format!("\"{}\"", shared_lib_name_to_link_name(&shared_lib));
-    }
-
-    panic!("empty list of shared library");
+    shared_libs
+        .get(0)
+        .map(|shared_lib| format!("\"{}\"", shared_lib_name_to_link_name(&shared_lib)))
 }
 
 pub fn use_glib_type(env: &crate::env::Env, import: &str) -> String {
@@ -275,10 +273,15 @@ mod tests {
         ];
         // https://github.com/rust-lang/cargo/issues/4533
         // list is not supported. Pick the first one
-        assert_eq!(shared_libs_to_links(&libs), "\"gobject-2.0\"");
+        assert_eq!(
+            shared_libs_to_links(&libs).as_deref(),
+            Some("\"gobject-2.0\"")
+        );
 
         let libs = vec![String::from("libgio-2.0.so.0")];
-        assert_eq!(shared_libs_to_links(&libs), "\"gio-2.0\"");
+        assert_eq!(shared_libs_to_links(&libs).as_deref(), Some("\"gio-2.0\""));
+
+        assert_eq!(shared_libs_to_links(&[]), None);
     }
 
     #[test]
