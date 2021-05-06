@@ -73,7 +73,7 @@ pub fn ffi_type(env: &Env, tid: TypeId, c_type: &str) -> Result {
 fn ffi_inner(env: &Env, tid: TypeId, inner: &str) -> Result {
     let typ = env.library.type_(tid);
     match *typ {
-        Type::Fundamental(fund) => {
+        Type::Fundamental(ref fund) => {
             use crate::library::Fundamental::*;
             let inner = match fund {
                 None => "libc::c_void",

@@ -74,7 +74,7 @@ fn ffi_inner(env: &Env, tid: library::TypeId, mut inner: String) -> Result {
 
     let typ = env.library.type_(tid);
     let res = match *typ {
-        Type::Fundamental(fund) => {
+        Type::Fundamental(ref fund) => {
             use crate::library::Fundamental::*;
             let inner = match fund {
                 None => "c_void",
@@ -114,6 +114,7 @@ fn ffi_inner(env: &Env, tid: library::TypeId, mut inner: String) -> Result {
                 IntPtr => "intptr_t",
                 UIntPtr => "uintptr_t",
                 Unsupported => return Err(TypeError::Unimplemented(inner)),
+                Vulkan(v) => return Ok(format!("ash::vk::{}", v).into()),
                 VarArgs => panic!("Should not reach here"),
             };
             Ok(inner.into())

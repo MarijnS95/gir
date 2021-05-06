@@ -205,7 +205,7 @@ impl Default for Concurrency {
     }
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum Fundamental {
     None,
     Boolean,
@@ -241,6 +241,7 @@ pub enum Fundamental {
     //Not defined in GLib directly
     OsString,
     Unsupported,
+    Vulkan(String),
 }
 
 impl Fundamental {
@@ -267,6 +268,7 @@ impl Fundamental {
                 | Fundamental::SSize
                 | Fundamental::Float
                 | Fundamental::Double
+                | Fundamental::Vulkan(_)
         )
     }
 }
@@ -989,6 +991,8 @@ impl Namespace {
 pub const INTERNAL_NAMESPACE_NAME: &str = "*";
 pub const INTERNAL_NAMESPACE: u16 = 0;
 pub const MAIN_NAMESPACE: u16 = 1;
+pub const VULKAN_NAMESPACE_NAME: &str = "Vulkan";
+pub const VULKAN_NAMESPACE: u16 = 2;
 
 #[derive(Debug)]
 pub struct Library {
@@ -1006,10 +1010,64 @@ impl Library {
             INTERNAL_NAMESPACE,
             library.add_namespace(INTERNAL_NAMESPACE_NAME)
         );
-        for &(name, t) in FUNDAMENTAL {
-            library.add_type(INTERNAL_NAMESPACE, name, Type::Fundamental(t));
+        for (name, t) in FUNDAMENTAL {
+            library.add_type(INTERNAL_NAMESPACE, name, Type::Fundamental(t.clone()));
         }
         assert_eq!(MAIN_NAMESPACE, library.add_namespace(main_namespace_name));
+
+        assert_eq!(
+            VULKAN_NAMESPACE,
+            library.add_namespace(VULKAN_NAMESPACE_NAME)
+        );
+        const VULKAN: &[&str] = &[
+            "AccessFlags",
+            "Buffer",
+            "BufferUsageFlags",
+            "CommandBuffer",
+            "CommandBufferLevel",
+            "CommandPool",
+            "DescriptorPool",
+            "DescriptorSet",
+            "Device",
+            "DeviceMemory",
+            "DeviceSize",
+            "Fence",
+            "Format",
+            "Image",
+            "ImageCreateInfo",
+            "ImageFormatProperties",
+            "ImageLayout",
+            "ImageSubresourceRange",
+            "ImageTiling",
+            "ImageUsageFlags",
+            "ImageView",
+            "ImageViewCreateInfo",
+            "Instance",
+            "MemoryAllocateInfo",
+            "MemoryHeapFlags",
+            "MemoryPropertyFlags",
+            "MemoryRequirements",
+            "PhysicalDevice",
+            "PhysicalDeviceFeatures",
+            "PhysicalDeviceMemoryProperties",
+            "PhysicalDeviceProperties",
+            "PhysicalDeviceType",
+            "PipelineStageFlags",
+            "Queue",
+            "QueueFamilyProperties",
+            "QueueFlags",
+            "Result",
+            "SampleCountFlags",
+            "Semaphore",
+            "SurfaceKHR",
+        ];
+        for v in VULKAN {
+            library.add_type(
+                VULKAN_NAMESPACE,
+                v,
+                Type::Fundamental(Fundamental::Vulkan(v.to_string())),
+            );
+        }
 
         //For string_type override
         Type::c_array(&mut library, TypeId::tid_utf8(), None, None);
