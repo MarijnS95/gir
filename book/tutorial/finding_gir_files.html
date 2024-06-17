@@ -90,7 +90,9 @@
             <div class="sidebar-scrollbox">
                 <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../tutorial/introduction.html"><strong aria-hidden="true">2.</strong> Tutorial</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../tutorial/preparation.html"><strong aria-hidden="true">2.1.</strong> Preparation</a></li><li class="chapter-item expanded "><a href="../tutorial/finding_gir_files.html" class="active"><strong aria-hidden="true">2.2.</strong> Finding .gir files</a></li><li class="chapter-item expanded "><a href="../tutorial/sys_library.html"><strong aria-hidden="true">2.3.</strong> Generating the FFI library</a></li><li class="chapter-item expanded "><a href="../tutorial/high_level_rust_api.html"><strong aria-hidden="true">2.4.</strong> Generating the Rust API</a></li><li class="chapter-item expanded "><a href="../tutorial/handling_errors.html"><strong aria-hidden="true">2.5.</strong> Handling generation errors</a></li><li class="chapter-item expanded "><a href="../tutorial/generate_docs.html"><strong aria-hidden="true">2.6.</strong> Generating documentation</a></li></ol></li><li class="chapter-item expanded "><a href="../config/introduction.html"><strong aria-hidden="true">3.</strong> Configuration files</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../config/ffi.html"><strong aria-hidden="true">3.1.</strong> FFI Options</a></li><li class="chapter-item expanded "><a href="../config/api.html"><strong aria-hidden="true">3.2.</strong> API Options</a></li><li class="chapter-item expanded "><a href="../config/name_override.html"><strong aria-hidden="true">3.3.</strong> Crate name override</a></li></ol></li></ol>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
 
         <!-- Track and set sidebar scroll position -->
@@ -189,8 +191,8 @@ You don't have to store all <code>.gir</code> files in the same folder.
 You can add multiple paths by changing the <code>girs_directories</code> field in the Gir.toml files.
 More on this in the next chapters.</p>
 <p>Have a look at the .gir file of your library.
-At the beginning of the file, you probably see something similar to <code>&lt;include name=&quot;GObject&quot; version=&quot;2.0&quot;/&gt;</code>.
-&quot;GObject&quot; in this case would be a dependency and you will have to find the .gir file for your dependencies as well.
+At the beginning of the file, you probably see something similar to <code>&lt;include name="GObject" version="2.0"/&gt;</code>.
+"GObject" in this case would be a dependency and you will have to find the .gir file for your dependencies as well.
 In most cases it will be enough to follow the next two steps of the tutorial to get all needed files.</p>
 <h2 id="gtk-dependencies"><a class="header" href="#gtk-dependencies">GTK dependencies</a></h2>
 <p>If your library depends on GTK libraries, the recommended way to get the <code>.gir</code> files for them is to add the <a href="https://github.com/gtk-rs/gir-files">gir-files repo</a> as a submodule as well.

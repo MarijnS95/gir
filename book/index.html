@@ -90,7 +90,9 @@
             <div class="sidebar-scrollbox">
                 <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html" class="active"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="tutorial/introduction.html"><strong aria-hidden="true">2.</strong> Tutorial</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="tutorial/preparation.html"><strong aria-hidden="true">2.1.</strong> Preparation</a></li><li class="chapter-item expanded "><a href="tutorial/finding_gir_files.html"><strong aria-hidden="true">2.2.</strong> Finding .gir files</a></li><li class="chapter-item expanded "><a href="tutorial/sys_library.html"><strong aria-hidden="true">2.3.</strong> Generating the FFI library</a></li><li class="chapter-item expanded "><a href="tutorial/high_level_rust_api.html"><strong aria-hidden="true">2.4.</strong> Generating the Rust API</a></li><li class="chapter-item expanded "><a href="tutorial/handling_errors.html"><strong aria-hidden="true">2.5.</strong> Handling generation errors</a></li><li class="chapter-item expanded "><a href="tutorial/generate_docs.html"><strong aria-hidden="true">2.6.</strong> Generating documentation</a></li></ol></li><li class="chapter-item expanded "><a href="config/introduction.html"><strong aria-hidden="true">3.</strong> Configuration files</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="config/ffi.html"><strong aria-hidden="true">3.1.</strong> FFI Options</a></li><li class="chapter-item expanded "><a href="config/api.html"><strong aria-hidden="true">3.2.</strong> API Options</a></li><li class="chapter-item expanded "><a href="config/name_override.html"><strong aria-hidden="true">3.3.</strong> Crate name override</a></li></ol></li></ol>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
 
         <!-- Track and set sidebar scroll position -->
@@ -216,7 +218,7 @@ Use the operating mode <code>doc</code> to do so.</p>
 <p>In order to generate the bindings and the wrapper for the first time, the above-mentioned steps should be followed.
 When you want to regenerate the crates because e.g.
 the library was updated, you can simplify the process by running the helper script <code>./generator.py</code>.
-The script detects <code>Gir.toml</code> configurations in the current directory and subdirectories (or the paths passed on the command-line) and generates &quot;normal&quot; or &quot;sys&quot; crates for it.
+The script detects <code>Gir.toml</code> configurations in the current directory and subdirectories (or the paths passed on the command-line) and generates "normal" or "sys" crates for it.
 Alternatively <code>--embed-docs</code> can be passed to prepare source-code for a documentation built by moving all documentation into it.
 For a complete overview of available options, pass <code>--help</code>.</p>
 <h2 id="gir-format-reference"><a class="header" href="#gir-format-reference">GIR format reference</a></h2>
